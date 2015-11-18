@@ -57627,3 +57627,551 @@ Processing by ProductosController#new as HTML
   Rendered productos/new.html.erb within layouts/application (4.0ms)
   Rendered shared/_navbar.html.erb (0.0ms)
 Completed 200 OK in 97ms (Views: 94.0ms | ActiveRecord: 1.0ms)
+  [1m[36m (53.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (10.0ms)[0m  select sqlite_version(*)
+  [1m[36m (45.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateVendedors (20151021000143)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "vendedors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "apellidoP" varchar(255), "apellidoM" varchar(255), "correo" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000143"]]
+  [1m[35m (44.0ms)[0m  commit transaction
+Migrating to CreateClientes (20151021000458)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "clientes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "apellidoP" varchar(255), "apellidoM" varchar(255), "direccion" varchar(255), "comuna" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000458"]]
+  [1m[35m (44.0ms)[0m  commit transaction
+Migrating to AddTelefonoToClientes (20151021000743)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  ALTER TABLE "clientes" ADD "telefono" integer
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000743"]]
+  [1m[35m (41.0ms)[0m  commit transaction
+Migrating to CreateEmpresas (20151021001005)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "empresas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "rubro" varchar(255), "direccion" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021001005"]]
+  [1m[35m (40.0ms)[0m  commit transaction
+Migrating to CreateProductos (20151021001203)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "productos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "codigo" varchar(255), "nombre" varchar(255), "tipo" varchar(255), "valor" integer, "empresa_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_productos_on_empresa_id" ON "productos" ("empresa_id")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151021001203"]]
+  [1m[36m (38.0ms)[0m  [1mcommit transaction[0m
+Migrating to DeviseCreateUsuarios (20151021224546)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "usuarios" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "index_usuarios_on_email" ON "usuarios" ("email")
+  [1m[36m (1.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE UNIQUE INDEX "index_usuarios_on_reset_password_token" ON "usuarios" ("reset_password_token")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021224546"]]
+  [1m[35m (44.0ms)[0m  commit transaction
+Migrating to CreateVens (20151024154905)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "vens" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cantidad" integer, "vendedor_id" integer, "producto_id" integer, "cliente_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_vens_on_vendedor_id" ON "vens" ("vendedor_id")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_vens_on_producto_id" ON "vens" ("producto_id")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_vens_on_cliente_id" ON "vens" ("cliente_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151024154905"]]
+  [1m[35m (46.0ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_productos_on_empresa_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_productos_on_empresa_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_cliente_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_cliente_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+[0m
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by InicioController#index as HTML
+  Rendered inicio/index.html.erb within layouts/application (1.0ms)
+  [1m[35mUsuario Load (0.0ms)[0m  SELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 4  ORDER BY "usuarios"."id" ASC LIMIT 1
+  Rendered shared/_navbar.html.erb (10.0ms)
+Completed 200 OK in 200ms (Views: 189.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/clientes.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/empresas.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/productos.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/inicio.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/vendedors.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/vens.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/clientes.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/empresas.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/inicio.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/productos.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/vendedors.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/vens.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:34 -0300
+
+
+Started GET "/usuarios/sign_up" for 127.0.0.1 at 2015-11-18 20:26:36 -0300
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (1.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (42.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 137ms (Views: 136.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/usuarios" for 127.0.0.1 at 2015-11-18 20:26:45 -0300
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"7nEBLYuWBzHJG+aZRW/EaVpFwt4/OR0D4RXWUkpt7IE=", "usuario"=>{"email"=>"prueba@m.cl", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUsuario Exists (0.0ms)[0m  SELECT  1 AS one FROM "usuarios"  WHERE "usuarios"."email" = 'prueba@m.cl' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "usuarios" ("created_at", "email", "encrypted_password", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2015-11-18 23:26:45.969663"], ["email", "prueba@m.cl"], ["encrypted_password", "$2a$10$wUcXh.qM5s4pO7I7JN7bSOlG77FKSNrcs7bZkxl09WpMfztJ/R6Yi"], ["updated_at", "2015-11-18 23:26:45.969663"]]
+  [1m[35m (97.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[35mSQL (0.0ms)[0m  UPDATE "usuarios" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "usuarios"."id" = 1  [["current_sign_in_at", "2015-11-18 23:26:46.072669"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-11-18 23:26:46.072669"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-11-18 23:26:46.073669"]]
+  [1m[36m (41.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 256ms (ActiveRecord: 138.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+Processing by InicioController#index as HTML
+  Rendered inicio/index.html.erb within layouts/application (0.0ms)
+  [1m[35mUsuario Load (0.0ms)[0m  SELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1
+  Rendered shared/_navbar.html.erb (2.0ms)
+Completed 200 OK in 96ms (Views: 95.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/clientes.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/inicio.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/vendedors.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/empresas.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/vens.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/productos.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/clientes.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/empresas.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/inicio.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/productos.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/vendedors.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/vens.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:46 -0300
+
+
+Started GET "/vendedors" for 127.0.0.1 at 2015-11-18 20:26:48 -0300
+Processing by VendedorsController#index as HTML
+  [1m[36mUsuario Load (1.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mVendedor Load (0.0ms)[0m  SELECT "vendedors".* FROM "vendedors"
+  Rendered vendedors/index.html.erb within layouts/application (2.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 119ms (Views: 111.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/empresas" for 127.0.0.1 at 2015-11-18 20:26:49 -0300
+Processing by EmpresasController#index as HTML
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mEmpresa Load (0.0ms)[0m  SELECT "empresas".* FROM "empresas"
+  Rendered empresas/index.html.erb within layouts/application (2.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 116ms (Views: 111.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vens" for 127.0.0.1 at 2015-11-18 20:26:49 -0300
+Processing by VensController#index as HTML
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mVen Load (0.0ms)[0m  SELECT "vens".* FROM "vens"
+  Rendered vens/index.html.erb within layouts/application (2.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 105ms (Views: 97.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/clientes" for 127.0.0.1 at 2015-11-18 20:26:50 -0300
+Processing by ClientesController#index as HTML
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mCliente Load (1.0ms)[0m  SELECT "clientes".* FROM "clientes"
+  Rendered clientes/index.html.erb within layouts/application (2.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 102ms (Views: 95.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/productos" for 127.0.0.1 at 2015-11-18 20:26:50 -0300
+Processing by ProductosController#index as HTML
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mProducto Load (0.0ms)[0m  SELECT "productos".* FROM "productos"
+  Rendered productos/index.html.erb within layouts/application (2.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 120ms (Views: 114.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/clientes" for 127.0.0.1 at 2015-11-18 20:26:51 -0300
+Processing by ClientesController#index as HTML
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mCliente Load (0.0ms)[0m  SELECT "clientes".* FROM "clientes"
+  Rendered clientes/index.html.erb within layouts/application (0.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 114ms (Views: 111.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/vendedors" for 127.0.0.1 at 2015-11-18 20:26:51 -0300
+Processing by VendedorsController#index as HTML
+  [1m[36mUsuario Load (1.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mVendedor Load (0.0ms)[0m  SELECT "vendedors".* FROM "vendedors"
+  Rendered vendedors/index.html.erb within layouts/application (1.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 116ms (Views: 113.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/empresas" for 127.0.0.1 at 2015-11-18 20:26:51 -0300
+Processing by EmpresasController#index as HTML
+  [1m[36mUsuario Load (1.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mEmpresa Load (0.0ms)[0m  SELECT "empresas".* FROM "empresas"
+  Rendered empresas/index.html.erb within layouts/application (1.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 96ms (Views: 95.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/vens" for 127.0.0.1 at 2015-11-18 20:26:52 -0300
+Processing by VensController#index as HTML
+  [1m[36mUsuario Load (1.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35mVen Load (0.0ms)[0m  SELECT "vens".* FROM "vens"
+  Rendered vens/index.html.erb within layouts/application (0.0ms)
+  Rendered shared/_navbar.html.erb (0.0ms)
+Completed 200 OK in 97ms (Views: 95.0ms | ActiveRecord: 1.0ms)
+
+
+Started DELETE "/usuarios/sign_out" for 127.0.0.1 at 2015-11-18 20:26:53 -0300
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"7nEBLYuWBzHJG+aZRW/EaVpFwt4/OR0D4RXWUkpt7IE="}
+  [1m[36mUsuario Load (0.0ms)[0m  [1mSELECT  "usuarios".* FROM "usuarios"  WHERE "usuarios"."id" = 1  ORDER BY "usuarios"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 47ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-18 20:26:53 -0300
+Processing by InicioController#index as HTML
+  Rendered inicio/index.html.erb within layouts/application (0.0ms)
+  Rendered shared/_navbar.html.erb (1.0ms)
+Completed 200 OK in 94ms (Views: 94.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/vens.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/empresas.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/productos.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/inicio.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/vendedors.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/clientes.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/clientes.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/empresas.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/inicio.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/productos.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/vendedors.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+
+
+Started GET "/assets/vens.js?body=1" for 127.0.0.1 at 2015-11-18 20:26:54 -0300
+  [1m[36m (47.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (39.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateVendedors (20151021000143)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "vendedors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "apellidoP" varchar(255), "apellidoM" varchar(255), "correo" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000143"]]
+  [1m[35m (40.0ms)[0m  commit transaction
+Migrating to CreateClientes (20151021000458)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE "clientes" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "apellidoP" varchar(255), "apellidoM" varchar(255), "direccion" varchar(255), "comuna" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000458"]]
+  [1m[35m (39.0ms)[0m  commit transaction
+Migrating to AddTelefonoToClientes (20151021000743)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  ALTER TABLE "clientes" ADD "telefono" integer
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021000743"]]
+  [1m[35m (36.0ms)[0m  commit transaction
+Migrating to CreateEmpresas (20151021001005)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "empresas" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rut" varchar(255), "nombre" varchar(255), "rubro" varchar(255), "direccion" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021001005"]]
+  [1m[35m (54.0ms)[0m  commit transaction
+Migrating to CreateProductos (20151021001203)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "productos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "codigo" varchar(255), "nombre" varchar(255), "tipo" varchar(255), "valor" integer, "empresa_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_productos_on_empresa_id" ON "productos" ("empresa_id")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151021001203"]]
+  [1m[36m (56.0ms)[0m  [1mcommit transaction[0m
+Migrating to DeviseCreateUsuarios (20151021224546)
+  [1m[35m (1.0ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "usuarios" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (2.0ms)[0m  CREATE UNIQUE INDEX "index_usuarios_on_email" ON "usuarios" ("email")
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE UNIQUE INDEX "index_usuarios_on_reset_password_token" ON "usuarios" ("reset_password_token")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151021224546"]]
+  [1m[35m (45.0ms)[0m  commit transaction
+Migrating to CreateVens (20151024154905)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "vens" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "cantidad" integer, "vendedor_id" integer, "producto_id" integer, "cliente_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_vens_on_vendedor_id" ON "vens" ("vendedor_id")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_vens_on_producto_id" ON "vens" ("producto_id")[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_vens_on_cliente_id" ON "vens" ("cliente_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151024154905"]]
+  [1m[35m (45.0ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_productos_on_empresa_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_productos_on_empresa_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_usuarios_on_email' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_cliente_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_cliente_id' AND type='index'
+[0m
+  [1m[35m (1.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_producto_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_vens_on_vendedor_id' AND type='index'
+[0m
