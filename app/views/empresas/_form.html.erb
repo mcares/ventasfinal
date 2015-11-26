@@ -40,7 +40,7 @@
 </div>
 
 
-<div class="form-control caja<%= @empresa.errors[:direccion].any? ? " has-error has-feedback" : "" %>">
+<div class="form-group<%= @empresa.errors[:direccion].any? ? " has-error has-feedback" : "" %>">
 <%= f.label :direccion, :class=>"col-sm-2 control-label" %>
 <div class="col-sm-5">
   <%= f.text_field :direccion, :class => 'form-control' %>
